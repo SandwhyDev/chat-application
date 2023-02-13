@@ -21,9 +21,9 @@ var name;
 io.on("connection", (socket) => {
   // console.log("new user connected");
 
-  socket.on("joining msg", (username) => {
-    name = username;
-    io.emit("chat message", `---${name} joined the chat---`);
+  socket.on("join room", (room) => {
+    socket.join(room);
+    console.log(`User joined room: ${room}`);
   });
 
   socket.on("disconnect", () => {
@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
       } else {
         console.log("File saved:");
 
-        socket.emit("file saved", { name: fileName });
+        socket.broadcast.emit("file saved", { name: fileName });
       }
     });
   });
